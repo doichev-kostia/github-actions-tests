@@ -13,9 +13,10 @@ jobs:
 
       - name: Set version env
         # writes APP_VERSION to GITHUB_ENV
-        run: ./.github/utils/set-version-env.sh
+        run: ./.github/scripts/set-version.sh
         env:
-          GITHUB_REF: ${{ github.ref }}
+          GITHUB_REF_TYPE: ${{ env.GITHUB_REF_TYPE }}
+          GITHUB_REF_NAME: ${{ github.GITHUB_REF_NAME }}
           GITHUB_SHA: ${{ github.sha }}
           GITHUB_ENV: ${{ env.GITHUB_ENV }}
 
