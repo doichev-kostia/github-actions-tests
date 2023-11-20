@@ -1,25 +1,21 @@
 on:
-  release:
-    types:
-      - published
+  pull_request:
+    branches:
+      - 'master'
+
 
 jobs:
-  set_version:
+  test:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set version env
-        # writes APP_VERSION to GITHUB_ENV
-        run: ./.github/scripts/set-version.sh
-        env:
-          GITHUB_REF_TYPE: ${{ env.GITHUB_REF_TYPE }}
-          GITHUB_REF_NAME: ${{ github.GITHUB_REF_NAME }}
-          GITHUB_SHA: ${{ github.sha }}
-          GITHUB_ENV: ${{ env.GITHUB_ENV }}
-
-      - name: check
+      - name: Log
         run: |
-          echo "APP_VERSION: ${{env.APP_VERSION}}"
+          printf "branch: %s\n" "${{ github.GITHUB_REF_NAME }}"
+          printf "branch: %s\n" "${{ github.ref }}"
+          printf "branch: %s\n" "${{ github.ref_name }}"
+          printf "branch: %s\n" "$GITHUB_REF_NAME"
+          
